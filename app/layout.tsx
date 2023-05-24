@@ -1,4 +1,5 @@
 import ToasterProvider from "./Providers/ToasterProvider";
+import LoginModal from "./components/Modals/LoginModal";
 import RegisterModal from "./components/Modals/RegisterModal";
 import Navbar from "./components/navbar/Navbar";
 import "./globals.css";
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={font.className}>
         <ToasterProvider />
         <RegisterModal />
+        <LoginModal />
         <Navbar />
         {children}
       </body>

@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import useLoginModal from "../../hooks/useLoginModal";
 import useRegisterModal from "../../hooks/useRegisterModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
@@ -13,8 +14,9 @@ import Button from "../Button";
 
 type Props = {};
 
-const RegisterModal = (props: Props) => {
-  const registerModal = useRegisterModal();
+const LoginModal = (props: Props) => {
+  const loginModal = useLoginModal();
+  const registerModal = useState();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
@@ -33,9 +35,9 @@ const RegisterModal = (props: Props) => {
     setIsLoading(true);
 
     axios
-      .post("/api/register", data)
+      .post("/api/login", data)
       .then(() => {
-        registerModal.onClose();
+        loginModal.onClose();
       })
       .catch((err) => {
         toast.error("Oops! something went wrong");
@@ -47,15 +49,18 @@ const RegisterModal = (props: Props) => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Welcome to airbnb" subTitle="Create your account!" />
-      <Input
+      <Heading
+        title="Welcome to airbnb"
+        subTitle="Please login into your account!"
+      />
+      {/* <Input
         id="name"
         label="Name"
         disabled={isLoading}
         register={register}
         errors={errors}
         required
-      />
+      /> */}
 
       <Input
         id="email"
@@ -83,14 +88,14 @@ const RegisterModal = (props: Props) => {
       <hr />
       <Button
         outline
-        label="Register with Google"
+        label="Login with Google"
         icon={FcGoogle}
         onclick={() => {}}
       />
 
       <Button
         outline
-        label="Register with Github"
+        label="Login with Github"
         icon={AiFillGithub}
         onclick={() => {}}
       />
@@ -100,7 +105,7 @@ const RegisterModal = (props: Props) => {
           <div>Already have an account?</div>
           <div
             className="text-neutral-800 cursor-pointer hover:underline"
-            onClick={registerModal.onClose}
+            onClick={loginModal.onClose}
           >
             Login
           </div>
@@ -112,10 +117,10 @@ const RegisterModal = (props: Props) => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Register"
+      isOpen={loginModal.isOpen}
+      title="Login"
       actionLabel="Continue"
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
@@ -123,4 +128,4 @@ const RegisterModal = (props: Props) => {
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
