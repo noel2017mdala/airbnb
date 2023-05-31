@@ -4,6 +4,7 @@ import Container from "../Container";
 import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
+import Categories from "./Categories";
 
 type UserData = {
   currentUser?: User | null;
@@ -21,6 +22,7 @@ const Navbar: React.FC<UserData> = ({ currentUser }) => {
           </div>
         </Container>
       </div>
+      <Categories />
     </div>
   );
 };
