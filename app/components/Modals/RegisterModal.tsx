@@ -10,6 +10,7 @@ import Heading from "../Heading";
 import Input from "../Inputs/Input";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
+import { signIn } from "next-auth/react";
 
 type Props = {};
 
@@ -85,14 +86,14 @@ const RegisterModal = (props: Props) => {
         outline
         label="Register with Google"
         icon={FcGoogle}
-        onclick={() => {}}
+        onclick={() => signIn("google")}
       />
 
       <Button
         outline
         label="Register with Github"
         icon={AiFillGithub}
-        onclick={() => {}}
+        onclick={() => signIn("github")}
       />
 
       <div className="text-neutral-500 text-center mt-4 font-light">

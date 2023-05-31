@@ -10,7 +10,7 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(client),
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID as string,
+      clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
     GoogleProvider({
@@ -50,15 +50,15 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
 
   pages: {
     signIn: "/",
   },
 
   debug: process.env.NODE_ENV === "development",
-  session: {
-    strategy: "jwt",
-  },
 
   secret: process.env.NEXT_AUTH_SECRET,
 };

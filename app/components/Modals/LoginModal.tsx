@@ -11,6 +11,8 @@ import Heading from "../Heading";
 import Input from "../Inputs/Input";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -18,6 +20,7 @@ const LoginModal = (props: Props) => {
   const loginModal = useLoginModal();
   const registerModal = useState();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const {
     register,
@@ -25,7 +28,6 @@ const LoginModal = (props: Props) => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -34,25 +36,37 @@ const LoginModal = (props: Props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios
-      .post("/api/login", data)
-      .then(() => {
+    // axios
+    //   .post("/api/login", data)
+    //   .then(() => {
+    //     loginModal.onClose();
+    //   })
+    //   .catch((err) => {
+    //     toast.error("Oops! something went wrong");
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+      if (callback?.ok) {
+        toast.success("login successfully");
+        router.refresh();
         loginModal.onClose();
-      })
-      .catch((err) => {
-        toast.error("Oops! something went wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading
-        title="Welcome to airbnb"
-        subTitle="Please login into your account!"
-      />
+      <Heading title="Welcome back" subTitle="Login into your account!" />
       {/* <Input
         id="name"
         label="Name"
