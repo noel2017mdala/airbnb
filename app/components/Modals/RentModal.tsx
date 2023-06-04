@@ -9,6 +9,8 @@ import CategoryInput from "../Inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
 import CountrySelect from "../Inputs/CountrySelect";
 import dynamic from "next/dynamic";
+import Counter from "../Inputs/Counter";
+import ImageUpload from "../Inputs/ImageUpload";
 
 type Props = {};
 
@@ -49,6 +51,11 @@ const RentModal = (props: Props) => {
 
   const category = watch("category");
   const location = watch("location");
+  const guestCount = watch("guestCount");
+  const rooms = watch("roomCount");
+  const bathrooms = watch("bathroomCount");
+
+  const imageSrc = watch("imageSrc");
 
   const Map = useMemo(() => {
     return dynamic(() => import("../Map"), {
@@ -122,6 +129,54 @@ const RentModal = (props: Props) => {
         />
 
         <Map center={location?.latlng} />
+      </div>
+    );
+  }
+
+  if (steps === Steps.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Share some basics about your place"
+          subTitle="what amenities do you have?"
+        />
+
+        <Counter
+          title="Guests"
+          subtitle="How many guests do you allow?"
+          value={guestCount}
+          onchange={(value) => setCustomValue("guestCount", value)}
+        />
+        <hr />
+        <Counter
+          title="Rooms"
+          subtitle="How many rooms do you have?"
+          value={rooms}
+          onchange={(value) => setCustomValue("roomCount", value)}
+        />
+        <hr />
+        <Counter
+          title="Bathrooms"
+          subtitle="How many Bathrooms do you have?"
+          value={bathrooms}
+          onchange={(value) => setCustomValue("bathroomCount", value)}
+        />
+      </div>
+    );
+  }
+
+  if (steps === Steps.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add photos of your place"
+          subTitle="Show guests what your place looks like!"
+        />
+
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
+        />
       </div>
     );
   }
