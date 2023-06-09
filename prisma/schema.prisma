@@ -55,9 +55,9 @@ model Listings {
    roomCount Int
    bathroomCount Int
    guestCount Int
-   locationValue Int
+   locationValue String
    userId String @db.ObjectId
-   prince Int
+   price Int
 
    user User @relation(fields: [userId], references: [id])
    resevations Resevation[]
