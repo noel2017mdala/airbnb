@@ -37,17 +37,6 @@ const LoginModal = (props: Props) => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    // axios
-    //   .post("/api/login", data)
-    //   .then(() => {
-    //     loginModal.onClose();
-    //   })
-    //   .catch((err) => {
-    //     toast.error("Oops! something went wrong");
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
     signIn("credentials", {
       ...data,
       redirect: false,
