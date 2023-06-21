@@ -69,7 +69,7 @@ const ListingClient = ({ listing, currentUser, reservations = [] }: Props) => {
         toast.success("Listing reserved");
         setDateRange(initialDateRange);
         //redirect to trips
-        router.refresh();
+        router.push("/trips");
       })
       .catch((err) => {
         toast.error("failed to add reservation.");
