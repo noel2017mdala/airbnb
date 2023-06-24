@@ -56,8 +56,6 @@ export async function DELETE(
 
   favoriteId = favoriteId.filter((id: string) => id !== listingId);
 
-  console.log(favoriteId);
-
   const updateListing = await client.user.update({
     where: {
       id: currentUser.id,
