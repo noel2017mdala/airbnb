@@ -11,6 +11,7 @@ import qs from "query-string";
 import { formatISO } from "date-fns";
 import Heading from "../Heading";
 import Calendar from "@/app/listings/[listingId]/Calendar";
+import Counter from "../Inputs/Counter";
 
 type Props = {};
 enum STEPS {
@@ -150,6 +151,35 @@ const SearchModal = (props: Props) => {
       </div>
     );
   }
+
+  if (steps === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading title="More information" subTitle="Find your perfect place" />
+
+        <Counter
+          title="Guests"
+          subtitle="How many guest are coming?"
+          value={guestCount}
+          onchange={(value) => setGuestCount(value)}
+        />
+
+        <Counter
+          title="Rooms"
+          subtitle="How many rooms do you need?"
+          value={roomCount}
+          onchange={(value) => setRoomCount(value)}
+        />
+
+        <Counter
+          title="Bathroom"
+          subtitle="How many bathrooms do you need?"
+          value={bathRoomCount}
+          onchange={(value) => setBathRoomCount(value)}
+        />
+      </div>
+    );
+  }
   return (
     <Modal
       isOpen={searchModal.isOpen}
@@ -158,6 +188,8 @@ const SearchModal = (props: Props) => {
       title="Filters"
       actionLabel={actionLabel}
       body={bodyContent}
+      secondaryActonLabel={secondaryActionLabel}
+      secondaryAction={steps === STEPS.LOCATION ? undefined : onBack}
     />
   );
 };
